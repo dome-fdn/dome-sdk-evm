@@ -1,0 +1,18 @@
+export { getBalance } from './balance.js'
+export { deposit } from './deposit.js'
+export { setLogger } from './utils/logger.js'
+export { getRemoteConfig } from './utils/remoteConfig.js'
+export type { RemoteConfig } from './utils/remoteConfig.js'
+export { withdraw } from './withdraw.js'
+
+export {
+    BASE_SEPOLIA_RPC,
+    CONTRACT_ADDRESS,
+    DOME_SIGN_IN_MESSAGE,
+    FEE_RECIPIENT_ADDRESS,
+    INDEXER_URL,
+    PRIVATE_USDC_CONTRACT_ADDRESS,
+    USDC_CONTRACT_ADDRESS,
+    USDC_DECIMALS,
+} from './utils/constants.js'
+export { clearCache } from './utils/utils.js'
