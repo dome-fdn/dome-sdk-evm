@@ -4,7 +4,11 @@
   "description": "Dome EVM shielded wallet SDK",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Dome-Foundation/dome-sdk-evm.git"
+    "url": "git+https://github.com/Dome-Foundation/dome-sdk-evm.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

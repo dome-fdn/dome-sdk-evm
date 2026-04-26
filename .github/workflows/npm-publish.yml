@@ -9,7 +9,6 @@ on:
       - "package.json"
 
 permissions:
-  id-token: write
   contents: read
 
 jobs:
@@ -19,6 +18,17 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Verify npm publish token
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::NPM_TOKEN secret is not configured on this repository."
+            echo "Create the @dome npm org, generate a publish token, and add it as GitHub secret NPM_TOKEN."
+            exit 1
+          fi
+          npm whoami --registry https://registry.npmjs.org/
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -32,10 +42,11 @@ jobs:
 
       - name: Check if version already exists on npm
         id: check
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           PKG_NAME=$(node -p 'require("./package.json").name')
-          PUBLISHED=$(npm view $PKG_NAME versions --json | grep -o "\"${{ steps.pkg.outputs.version }}\"" || true)
-          if [ -n "$PUBLISHED" ]; then
+          if npm view "$PKG_NAME" versions --json 2>/dev/null | grep -q "\"${{ steps.pkg.outputs.version }}\""; then
             echo "exists=true" >> $GITHUB_OUTPUT
             echo "Version ${{ steps.pkg.outputs.version }} already exists on npm. Skipping publish."
           else
@@ -46,10 +57,12 @@ jobs:
         run: npm install
 
       - name: Build source
-        run: npm run build || echo "No build script defined."
+        run: npm run build
 
       - name: Publish to npm
         if: steps.check.outputs.exists == 'false'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           echo "Publishing version ${{ steps.pkg.outputs.version }}..."
           npm publish --access public
