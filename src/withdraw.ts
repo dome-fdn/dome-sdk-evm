@@ -127,9 +127,16 @@ export async function withdraw({ withdrawAmountInput, recipient, keyBasePath, si
     });
 
     logger.info('submitting transaction to relayer...');
-    const response = await fetch(`${INDEXER_URL}/relayer/withdraw`, {
+    const relayerWithdrawUrl =
+        process.env.DOME_RELAYER_WITHDRAW_URL ?? `${INDEXER_URL}/relayer/withdraw`;
+    const relayerSecret = process.env.DOME_RELAYER_SECRET || '';
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (relayerSecret) {
+        headers['x-dome-relayer-secret'] = relayerSecret;
+    }
+    const response = await fetch(relayerWithdrawUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ args, extData, token }),
     });
 

@@ -4,7 +4,6 @@ import { poseidon1, poseidon2, poseidon3, poseidon4 } from 'poseidon-lite';
 import { INDEXER_URL } from './constants.js';
 import { UniversalStorage } from './db.js';
 import { logger } from './logger.js';
-import { prove } from './prover.js';
 import { Utxo } from './utxo.js';
 
 const ethStorage = new UniversalStorage('DomeShieldDB', 'domeEthProd');
@@ -180,6 +179,7 @@ export async function getProof({
         outPubkey: outputs.map((x) => x.keypair.pubkey.toString()),
     };
 
+    const { prove } = await import('./prover.js');
     const { pA, pB, pC } = await prove(input, `${keyBasePath}${inputs.length}`);
 
     const args = {

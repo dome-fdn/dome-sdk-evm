@@ -14,7 +14,12 @@ import { toFixedHex } from './utils.js';
  */
 export async function prove(input: any, keyBasePath: string) {
     // @ts-ignore
-    const useSingleThread = typeof Bun !== 'undefined' || typeof Deno !== 'undefined';
+    const isReactNative =
+        typeof navigator !== 'undefined' && (navigator as { product?: string }).product === 'ReactNative';
+    const useSingleThread =
+        typeof (globalThis as { Bun?: unknown }).Bun !== 'undefined' ||
+        typeof (globalThis as { Deno?: unknown }).Deno !== 'undefined' ||
+        isReactNative;
     const singleThreadOpts = useSingleThread ? { singleThread: true } : undefined;
 
     // @ts-ignore
