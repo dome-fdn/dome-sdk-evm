@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers';
 import { decrypt, encrypt } from './encryption.js';
 import { Keypair } from './keypair.js';
-import { poseidonHash, randomBN } from './utils.js';
+import { poseidonHash, randomBN } from './field.js';
 
 const DUMMY_MINT = BigNumber.from(0);
 

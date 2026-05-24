@@ -1,6 +1,6 @@
 // @ts-ignore
 import { utils } from 'ffjavascript';
-import { toFixedHex } from './utils.js';
+import { toFixedHex } from './field.js';
 
 /**
  * Generates a Zero-Knowledge proof for a transaction.

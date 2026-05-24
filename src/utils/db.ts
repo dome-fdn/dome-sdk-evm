@@ -7,6 +7,9 @@ export interface StorageAdapter {
 }
 
 const isBrowser = typeof window !== 'undefined' && typeof indexedDB !== 'undefined';
+const isReactNative =
+    typeof navigator !== 'undefined' &&
+    (navigator as Navigator & { product?: string }).product === 'ReactNative';
 const isNodeRuntime =
     typeof process !== 'undefined' &&
     typeof process.versions !== 'undefined' &&
@@ -28,6 +31,9 @@ export class UniversalStorage {
     async init(): Promise<UniversalStorage> {
         if (isBrowser) {
             this.adapter = new BrowserIDBAdapter(this.dbName, this.storeName);
+            await this.adapter.setup();
+        } else if (isReactNative) {
+            this.adapter = new ServerMemoryAdapter();
             await this.adapter.setup();
         } else {
             this.adapter = await this.createServerAdapter();

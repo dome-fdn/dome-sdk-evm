@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from 'ethers';
-import { poseidonHash, toFixedHex } from './utils.js';
+import { poseidonHash, toFixedHex } from './field.js';
 
 export class Keypair {
     public privkey: string;
