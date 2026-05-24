@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from 'ethers';
-import ERCPoolAbi from './utils/ERCPool.abi.json' with { type: 'json' };
-import EtherPoolAbi from './utils/EtherPool.abi.json' with { type: 'json' };
+import ERCPoolAbi from './utils/ERCPool.abi.json';
+import EtherPoolAbi from './utils/EtherPool.abi.json';
 import { BASE_SEPOLIA_RPC, CONTRACT_ADDRESS, INDEXER_URL, PRIVATE_USDC_CONTRACT_ADDRESS, USDC_CONTRACT_ADDRESS } from './utils/constants.js';
 import { deriveKeys } from './utils/encryption.js';
 import { logger } from './utils/logger.js';
