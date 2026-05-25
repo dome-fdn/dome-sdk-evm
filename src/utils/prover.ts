@@ -1,6 +1,14 @@
-// @ts-ignore
-import { utils } from 'ffjavascript';
 import { toFixedHex } from './field.js';
+
+type NativeProof = {
+    pA: string[];
+    pB: string[][];
+    pC: string[];
+};
+
+type NativeProverGlobal = typeof globalThis & {
+    __DOME_NATIVE_PROVER__?: (input: any, keyBasePath: string) => Promise<NativeProof>;
+};
 
 /**
  * Generates a Zero-Knowledge proof for a transaction.
@@ -13,6 +21,11 @@ import { toFixedHex } from './field.js';
  * EventTarget.dispatchEvent (which requires a proper Event instance in Bun).
  */
 export async function prove(input: any, keyBasePath: string) {
+    const nativeProver = (globalThis as NativeProverGlobal).__DOME_NATIVE_PROVER__;
+    if (nativeProver) {
+        return nativeProver(input, keyBasePath);
+    }
+
     // @ts-ignore
     const isReactNative =
         typeof navigator !== 'undefined' && (navigator as { product?: string }).product === 'ReactNative';
@@ -22,6 +35,8 @@ export async function prove(input: any, keyBasePath: string) {
         isReactNative;
     const singleThreadOpts = useSingleThread ? { singleThread: true } : undefined;
 
+    // @ts-ignore
+    const { utils } = await import('ffjavascript');
     // @ts-ignore
     const snarkjs = await import('snarkjs');
     const { proof } = await snarkjs.groth16.fullProve(
