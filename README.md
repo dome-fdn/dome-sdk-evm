@@ -36,16 +36,21 @@ npm run build
 
 ## Environment
 
-Configure these before running deposit/withdraw/balance:
+Configure these `DOME_*` variables before running deposit/withdraw/balance:
 
-- `NEXT_PUBLIC_DOME_EVM_INDEXER_URL` — Dome indexer API (browser: use same-origin proxy such as `/api/indexer`)
-- `NEXT_PUBLIC_DOME_BASE_RPC` — EVM JSON-RPC endpoint
-- `NEXT_PUBLIC_DOME_ETH_POOL_ADDRESS` — deployed shielded ETH pool proxy
-- `NEXT_PUBLIC_DOME_FEE_RECIPIENT_ADDRESS` — relayer fee recipient
-- `NEXT_PUBLIC_DOME_USDC_POOL_ADDRESS` — optional private USDC pool
-- `NEXT_PUBLIC_DOME_USDC_TOKEN_ADDRESS` — optional USDC token address
+- `DOME_EVM_INDEXER_URL` — Dome indexer API (browser apps often use a same-origin proxy such as `/api/indexer`)
+- `DOME_BASE_RPC` — EVM JSON-RPC endpoint
+- `DOME_ETH_POOL_ADDRESS` — deployed shielded ETH pool proxy
+- `DOME_FEE_RECIPIENT_ADDRESS` — relayer fee recipient
+- `DOME_CHAIN_ID` — optional; target chain id
+- `DOME_USDC_POOL_ADDRESS` — optional private USDC pool
+- `DOME_USDC_TOKEN_ADDRESS` — optional USDC token address
+- `DOME_RELAYER_SECRET` — optional; forwarded on withdraw when calling the relayer directly
+- `DOME_RELAYER_WITHDRAW_URL` — optional; override relayer withdraw endpoint
 
-Circuit proving artifacts must be served at a public `keyBasePath` (for example `/circuits/transaction` → `transaction2.wasm` / `transaction2.zkey`).
+Host apps (Next.js, Expo, Node scripts) may use framework-specific env vars at build time and map them to these keys **before importing** the SDK. See `dome-mobile/src/dome/configureSdk.ts` and `dome-web/app/wallet/configureSdk.ts`.
+
+Circuit proving artifacts must be served at a public `keyBasePath` (for example `/circuits/transaction` → `transaction2.wasm` / `transaction2.zkey`). Web/mobile apps usually expose this via `DOME_CIRCUIT_KEY_BASE_PATH` at the app layer.
 
 ## Usage
 
