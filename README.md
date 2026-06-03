@@ -1,4 +1,4 @@
-# @dome/sdk-evm
+# @dome-foundation/sdk-evm
 
 TypeScript SDK for Dome shielded ETH/USDC flows on EVM chains using the **Dome Shielded EVM protocol**.
 
@@ -7,25 +7,14 @@ TypeScript SDK for Dome shielded ETH/USDC flows on EVM chains using the **Dome S
 Published package (after npm org setup):
 
 ```bash
-npm install @dome/sdk-evm
+npm install @dome-foundation/sdk-evm
 ```
 
 Local monorepo install:
 
 ```bash
-npm install @dome/sdk-evm@file:../dome-sdk-evm
+npm install @dome-foundation/sdk-evm@file:../dome-sdk-evm
 ```
-
-## Publish (maintainers)
-
-Scoped packages require an npm organization and CI secret:
-
-1. Create the **`@dome`** org at [npmjs.com/org/create](https://www.npmjs.com/org/create)
-2. Create an npm **Automation** or **Granular Access Token** with publish access to `@dome`
-3. Add it to this repo as GitHub secret **`NPM_TOKEN`**
-4. Bump `version` in `package.json` and push to `main`
-
-The workflow publishes only when `package.json` changes and the version is new.
 
 ## Build
 
@@ -60,7 +49,7 @@ import {
   withdraw,
   getBalance,
   DOME_SIGN_IN_MESSAGE,
-} from '@dome/sdk-evm';
+} from '@dome-foundation/sdk-evm';
 ```
 
 See [`example/eth.ts`](example/eth.ts) and the [`dome-web`](https://github.com/Dome-Foundation/dome-web) wallet UI.

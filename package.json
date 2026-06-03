@@ -1,5 +1,5 @@
 {
-  "name": "@dome/sdk-evm",
+  "name": "@dome-foundation/sdk-evm",
   "version": "1.0.0",
   "description": "Dome EVM shielded wallet SDK",
   "repository": {
