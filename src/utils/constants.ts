@@ -22,6 +22,8 @@ export const BASE_RPC =
     readEnv('DOME_BASE_RPC') ??
     'http://127.0.0.1:8545';
 
+export const RPC_POLLING_INTERVAL_MS = Number(readEnv('DOME_RPC_POLLING_INTERVAL_MS') ?? '10000');
+
 export const DOME_SIGN_IN_MESSAGE = 'Dome shielded account sign in';
 
 export const PRIVATE_USDC_CONTRACT_ADDRESS =

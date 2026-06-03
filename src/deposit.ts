@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from 'ethers';
 import ERCPoolAbi from './utils/ERCPool.abi.json';
 import EtherPoolAbi from './utils/EtherPool.abi.json';
-import { BASE_RPC, CONTRACT_ADDRESS, INDEXER_URL, PRIVATE_USDC_CONTRACT_ADDRESS, USDC_CONTRACT_ADDRESS } from './utils/constants.js';
+import { BASE_RPC, CONTRACT_ADDRESS, INDEXER_URL, PRIVATE_USDC_CONTRACT_ADDRESS, RPC_POLLING_INTERVAL_MS, USDC_CONTRACT_ADDRESS } from './utils/constants.js';
 import { deriveKeys } from './utils/encryption.js';
 import { logger } from './utils/logger.js';
 import { getRemoteConfig } from './utils/remoteConfig.js';
@@ -17,6 +17,7 @@ export async function deposit({ depositAmountInput, keyBasePath, signature, addr
     token?: 'eth' | 'usdc',
 }) {
     const readProvider = new ethers.providers.JsonRpcProvider(BASE_RPC);
+    readProvider.pollingInterval = RPC_POLLING_INTERVAL_MS;
     const isUsdc = token === 'usdc';
 
     const remoteConfig = await getRemoteConfig();
@@ -207,12 +208,12 @@ export async function deposit({ depositAmountInput, keyBasePath, signature, addr
 async function confirmEncryptedOutput(encryptedOutput1: string, token: 'eth' | 'usdc') {
     logger.debug('verifying transaction on indexer...', encryptedOutput1);
     let retryTimes = 0;
-    const itv = 2;
     const start = Date.now();
     while (true) {
         logger.debug('Confirming transaction..');
         logger.debug(`retryTimes: ${retryTimes}`);
-        await new Promise(resolve => setTimeout(resolve, itv * 1000));
+        const retryDelayMs = Math.min(5000 + retryTimes * 2500, 15000);
+        await new Promise(resolve => setTimeout(resolve, retryDelayMs));
         logger.debug('Fetching updated onchain state...');
         let res = await fetch(INDEXER_URL + '/check_encrypted_output', {
             method: 'POST',
