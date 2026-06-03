@@ -6,7 +6,7 @@ export type { RemoteConfig } from './utils/remoteConfig.js'
 export { withdraw } from './withdraw.js'
 
 export {
-    BASE_SEPOLIA_RPC,
+    BASE_RPC,
     CONTRACT_ADDRESS,
     DOME_SIGN_IN_MESSAGE,
     FEE_RECIPIENT_ADDRESS,

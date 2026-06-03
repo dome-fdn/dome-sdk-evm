@@ -18,7 +18,7 @@ export const INDEXER_URL =
     readEnv('DOME_EVM_INDEXER_URL') ??
     'http://127.0.0.1:8788';
 
-export const BASE_SEPOLIA_RPC =
+export const BASE_RPC =
     readEnv('DOME_BASE_RPC') ??
     'http://127.0.0.1:8545';
 

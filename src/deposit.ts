@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from 'ethers';
 import ERCPoolAbi from './utils/ERCPool.abi.json';
 import EtherPoolAbi from './utils/EtherPool.abi.json';
-import { BASE_SEPOLIA_RPC, CONTRACT_ADDRESS, INDEXER_URL, PRIVATE_USDC_CONTRACT_ADDRESS, USDC_CONTRACT_ADDRESS } from './utils/constants.js';
+import { BASE_RPC, CONTRACT_ADDRESS, INDEXER_URL, PRIVATE_USDC_CONTRACT_ADDRESS, USDC_CONTRACT_ADDRESS } from './utils/constants.js';
 import { deriveKeys } from './utils/encryption.js';
 import { logger } from './utils/logger.js';
 import { getRemoteConfig } from './utils/remoteConfig.js';
@@ -16,7 +16,7 @@ export async function deposit({ depositAmountInput, keyBasePath, signature, addr
     txSender: any,
     token?: 'eth' | 'usdc',
 }) {
-    const readProvider = new ethers.providers.JsonRpcProvider(BASE_SEPOLIA_RPC);
+    const readProvider = new ethers.providers.JsonRpcProvider(BASE_RPC);
     const isUsdc = token === 'usdc';
 
     const remoteConfig = await getRemoteConfig();

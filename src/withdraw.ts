@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from 'ethers';
 import ERCPoolAbi from './utils/ERCPool.abi.json';
 import EtherPoolAbi from './utils/EtherPool.abi.json';
-import { BASE_SEPOLIA_RPC, CONTRACT_ADDRESS, FEE_RECIPIENT_ADDRESS, INDEXER_URL, PRIVATE_USDC_CONTRACT_ADDRESS, USDC_CONTRACT_ADDRESS } from './utils/constants.js';
+import { BASE_RPC, CONTRACT_ADDRESS, FEE_RECIPIENT_ADDRESS, INDEXER_URL, PRIVATE_USDC_CONTRACT_ADDRESS, USDC_CONTRACT_ADDRESS } from './utils/constants.js';
 import { deriveKeys } from './utils/encryption.js';
 import { logger } from './utils/logger.js';
 import { getRemoteConfig } from './utils/remoteConfig.js';
@@ -51,7 +51,7 @@ export async function withdraw({ withdrawAmountInput, recipient, keyBasePath, si
     const { encryptionKey, keypair } = deriveKeys(signature);
     logger.debug(`UTXO pubkey: ${toFixedHex(keypair.pubkey)}`);
 
-    const readProvider = new ethers.providers.JsonRpcProvider(BASE_SEPOLIA_RPC);
+    const readProvider = new ethers.providers.JsonRpcProvider(BASE_RPC);
     const pool = new ethers.Contract(poolAddress, abi, readProvider);
 
     const withdrawAmount = isUsdc

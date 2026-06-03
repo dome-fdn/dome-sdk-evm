@@ -48,7 +48,7 @@ Configure these `DOME_*` variables before running deposit/withdraw/balance:
 - `DOME_RELAYER_SECRET` — optional; forwarded on withdraw when calling the relayer directly
 - `DOME_RELAYER_WITHDRAW_URL` — optional; override relayer withdraw endpoint
 
-Host apps (Next.js, Expo, Node scripts) may use framework-specific env vars at build time and map them to these keys **before importing** the SDK. See `dome-mobile/src/dome/configureSdk.ts` and `dome-web/app/wallet/configureSdk.ts`.
+Host apps (Next.js, Expo, Node scripts) may use framework-specific env vars at build time and map them to these keys **before importing** the SDK. For example, `dome-mobile/src/dome/configureSdk.ts` maps Expo runtime config into `DOME_*` keys, while `dome-web` exposes same-origin API routes and passes the exported wallet app `EXPO_PUBLIC_*` values during build.
 
 Circuit proving artifacts must be served at a public `keyBasePath` (for example `/circuits/transaction` → `transaction2.wasm` / `transaction2.zkey`). Web/mobile apps usually expose this via `DOME_CIRCUIT_KEY_BASE_PATH` at the app layer.
 
